@@ -18,6 +18,18 @@ def simulate(data: InputData):
     displacement = data.F / (data.E * (1 - data.nu ** 2))
     return {"max_displacement": displacement}
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or restrict to your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # --- run the server ---
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
