@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple FEM Teaching Demo</title>
+</head>
+<body>
+  <h2>Teaching FEM Example (Option A)</h2>
+
+  <label>E (Young’s modulus): <input id="E" value="210e9"></label><br>
+  <label>ν (Poisson’s ratio): <input id="nu" value="0.3"></label><br>
+  <label>F (load): <input id="F" value="1000"></label><br><br>
+
+  <button onclick="runSim()">Run Simulation</button>
+  <p id="result"></p>
+
+  <script>
+    async function runSim() {
+      const E  = parseFloat(document.getElementById('E').value);
+      const nu = parseFloat(document.getElementById('nu').value);
+      const F  = parseFloat(document.getElementById('F').value);
+
+      const response = await fetch("http://127.0.0.1:8000/simulate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({E, nu, F})
+      });
+      const data = await response.json();
+      document.getElementById("result").innerText =
+        "Max displacement = " + data.max_displacement.toExponential(3);
+    }
+  </script>
+</body>
+</html>
