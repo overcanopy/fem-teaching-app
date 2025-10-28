@@ -7,7 +7,7 @@ app = FastAPI()
 # Allow your frontend to talk to backend (adjust this URL later)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # change "*" to your GitHub Pages URL for better security
+    allow_origins=["https://github.com/overcanopy/fem-teaching-app"],  # change "*" to your GitHub Pages URL for better security
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -22,3 +22,4 @@ class InputData(BaseModel):
 def simulate(data: InputData):
     displacement = data.F / (data.E * (1 - data.nu ** 2))
     return {"max_displacement": displacement}
+
